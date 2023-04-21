@@ -21,18 +21,29 @@ def get_content(limit):
     matches = []
     for i in range(limit):
         exactly = convert_to_eest(exact_time[i].text)
-        team_1 = left_team[i].find('a')['title'].split('(')
-        team_2 = right_team[i].find('a')['title'].split('(')
+        # team_1 = left_team[i].find('a')['title'].split('(')
+        # team_2 = right_team[i].find('a')['title'].split('(')
+        team_2 = right_team[i].find('a')
+        if team_2 is not None:
+            team_2 = team_2['title'].split('(')
+        else:
+            team_2 = ['TBD']
+        team_1 = left_team[i].find('a')
+        if team_1 is not None:
+            team_1 = team_1['title'].split('(')
+        else:
+            team_1 = ['TBD']
+
         tourn = tournament[i].find('a')['title']
         scoreq = score[i].find('div').text.strip()
-        # date = exactly.split(',')[0]
+        date = exactly.split(',')[0]
         match = {
             'time': exactly,
             'team_1': team_1[0],
             'team_2': team_2[0],
             'tournament': tourn,
-            'score': scoreq
-            # 'date': date
+            'score': scoreq,
+            'date': date
         }
         if match not in matches:
             matches.append(match)
@@ -40,23 +51,21 @@ def get_content(limit):
 get_content(limit)
 
 def get_tournament():
-    content = get_content(10)
+    content = get_content(50)
     Tournaments = []
     for match in content:
         Tournament = match['tournament']
         if Tournament not in Tournaments:
             Tournaments.append(Tournament) 
-    print(Tournaments)
     return Tournaments
 get_tournament()
 
-
-# def generate_notification():
-#     content = get_content(source)
-#     notifications = []
-#     for i in range(5):
-#         notification = f"{content[i]['team_1']} vs {content[i]['team_2']}, {content[i]['time']}, {content[i]['tournament']}"
-#         notifications.append(notification)
-#     print(notifications)
-#     return notifications
-# generate_notification()
+def get_date():
+    content = get_content(50)
+    Dates = []
+    for match in content:
+        Date = match['date']
+        if Date not in Dates:
+            Dates.append(Date) 
+    return Dates
+get_tournament()
