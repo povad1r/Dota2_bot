@@ -85,7 +85,10 @@ async def date_pick(callback_query: types.CallbackQuery):
             response = (f"\n\n▪️ Tournament: {match['tournament']}▪️\n▪️ Match time: {match['time']}▪️\n▫️ {match['team_1']} {match['score']} {match['team_2']}▫️")
             await bot.send_message(callback_query.from_user.id, response)
 
-
+@dp.message_handler(commands='support', state='default')
+async def support(message: types.Message, state: FSMContext):
+    await message.answer('Для вирішення проблеми пишіть @povad1r')
+    await state.set_state('default')
 
 async def on_startup(dp):
     await set_default_commands(dp)
