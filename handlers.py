@@ -33,7 +33,7 @@ async def set_default_commands(dp):
 async def go_back(callback_query: types.CallbackQuery, state: FSMContext):
     await state.set_state('default')
     await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
-    await bot.send_message(callback_query.from_user.id, f'Ти знову можеш використовувати команди!')
+    await bot.send_message(callback_query.from_user.id, f'Ти повернувся назад, ось перелік усіх команд:\n/matches🕹️\n/date📅\n/tournament🏆\n/support🎧')
 
 
 @dp.message_handler(commands='start')
